@@ -16,7 +16,7 @@ export function Footer() {
           <p className="t-body mt-5 max-w-sm text-mute">{agency.description}</p>
         </div>
 
-        <nav aria-label="Footer" className="md:col-span-3 md:col-start-7">
+        <nav aria-label="Footer" className="md:col-span-3 md:col-start-6">
           <p className="t-mono text-mute">Index</p>
           <ul className="mt-4 space-y-1">
             {navigation.map((item) => (

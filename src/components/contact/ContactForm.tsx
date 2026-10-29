@@ -24,7 +24,7 @@ const inputClass =
 const noopSubscribe = () => () => {};
 
 export function ContactForm() {
-  const { contact, services } = siteConfig;
+  const { contact, pillars } = siteConfig;
   // False on the server and until hydration: stops a native GET submit from putting the brief in the URL.
   const hydrated = useSyncExternalStore(noopSubscribe, () => true, () => false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -45,7 +45,8 @@ export function ContactForm() {
       email: String(data.get("email") ?? ""),
       message: String(data.get("message") ?? ""),
     };
-    const projectType = String(data.get("projectType") ?? "");
+    const areas = data.getAll("area").map(String);
+    const timeline = String(data.get("timeline") ?? "");
 
     const found = validate(values);
     setErrors(found);
@@ -59,7 +60,7 @@ export function ContactForm() {
     if (!contact.formEndpoint) {
       // No submission endpoint is configured: hand the brief to the visitor's email client.
       const subject = `Project inquiry from ${values.name.trim()}`;
-      const body = `${values.message.trim()}\n\n—\n${values.name.trim()}\n${values.email.trim()}${projectType ? `\nProject type: ${projectType}` : ""}`;
+      const body = `${values.message.trim()}\n\n—\n${values.name.trim()}\n${values.email.trim()}${areas.length ? `\nAreas: ${areas.join(", ")}` : ""}${timeline ? `\nTimeline: ${timeline}` : ""}`;
       window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       setStatus("mail");
       return;
@@ -72,7 +73,7 @@ export function ContactForm() {
       const response = await fetch(contact.formEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ ...values, projectType }),
+        body: JSON.stringify({ ...values, areas, timeline }),
         signal: controller.signal,
       });
       if (!response.ok) throw new Error(`Submission failed with status ${response.status}`);
@@ -123,17 +124,29 @@ export function ContactForm() {
           )}
         </div>
 
-        <div>
-          <label htmlFor="projectType" className="t-mono text-mute">
-            Project type <span className="normal-case tracking-normal">(optional)</span>
-          </label>
-          <select id="projectType" name="projectType" defaultValue="" className={`${inputClass} border-line [&>option]:bg-obsidian`}>
-            <option value="">Not sure yet</option>
-            {services.map((service) => (
-              <option key={service.id} value={service.title}>
-                {service.title}
-              </option>
+        <fieldset className="m-0 min-w-0 border-0 p-0">
+          <legend className="t-mono text-mute">
+            Areas involved <span className="normal-case tracking-normal">(optional)</span>
+          </legend>
+          <div className="mt-3 grid gap-x-6 sm:grid-cols-2">
+            {pillars.map((pillar) => (
+              <label key={pillar.id} className="flex min-h-12 cursor-pointer items-center gap-3 border-b border-line text-[1rem] has-[:checked]:text-lime">
+                <input type="checkbox" name="area" value={pillar.name} className="size-4 shrink-0 appearance-none border border-fg/60 checked:border-lime checked:bg-lime" />
+                {pillar.name}
+              </label>
             ))}
+          </div>
+        </fieldset>
+
+        <div>
+          <label htmlFor="timeline" className="t-mono text-mute">
+            Timeline <span className="normal-case tracking-normal">(optional)</span>
+          </label>
+          <select id="timeline" name="timeline" defaultValue="" className={`${inputClass} border-line [&>option]:bg-obsidian`}>
+            <option value="">Not sure yet</option>
+            <option value="As soon as possible">As soon as possible</option>
+            <option value="Within three months">Within three months</option>
+            <option value="Later, still exploring">Later, still exploring</option>
           </select>
         </div>
 

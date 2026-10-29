@@ -22,7 +22,7 @@ export function Hero() {
 
         <div className="relative flex flex-1 flex-col lg:justify-end lg:pb-12">
           {/* sculpture: in flow on small screens, anchored right on large ones */}
-          <div className="relative left-1/2 mt-2 w-[min(122%,42rem)] -translate-x-1/2 lg:absolute lg:top-1/2 lg:right-[-1vw] lg:left-auto lg:mt-0 lg:w-[min(48vw,calc(100svh-15rem))] lg:-translate-y-1/2 lg:translate-x-0">
+          <div className="relative left-1/2 mt-2 w-[min(122%,42rem)] -translate-x-1/2 sm:w-[min(100%,30rem)] lg:absolute lg:top-1/2 lg:right-[-1vw] lg:left-auto lg:mt-0 lg:w-[min(53vw,calc(100svh-12rem))] lg:-translate-y-1/2 lg:translate-x-0">
             <HeroFigure />
           </div>
 

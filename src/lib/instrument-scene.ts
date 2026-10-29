@@ -241,7 +241,7 @@ export async function createInstrumentScene(options: InstrumentSceneOptions): Pr
 
     for (const { material, part, baseIntensity } of tinted) {
       const on = active === part;
-      const targetGlow = on ? 0.32 : 0;
+      const targetGlow = on ? 0.18 : 0;
       const targetEnv = active && !on ? baseIntensity * 0.45 : baseIntensity;
       const cur = level.get(material) ?? { glow: 0, env: baseIntensity };
       cur.glow = MathUtils.damp(cur.glow, targetGlow, 8, dt);

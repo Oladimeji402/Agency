@@ -32,8 +32,21 @@ export function Contact() {
               </li>
             )}
           </ul>
-          <div className="mt-6">
+
+          <div className="mt-12">
+            <p className="t-mono text-mute">What happens next</p>
+            <ol className="mt-4 max-w-md">
+              {contact.next.map((item, i) => (
+                <li key={item} className="flex gap-4 border-t border-line py-4 text-[1rem] leading-snug last:border-b">
+                  <span className="t-mono pt-0.5 text-mute">{String(i + 1).padStart(2, "0")}</span>
+                  {item}
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-3">
             <DraftNote>contact details are placeholders</DraftNote>
+            <DraftNote>next steps are proposed, not promised</DraftNote>
           </div>
         </div>
 

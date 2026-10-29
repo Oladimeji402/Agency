@@ -27,20 +27,25 @@ Edit [`src/config/site.ts`](src/config/site.ts):
 | What | Where in the file |
 | --- | --- |
 | Agency name and wordmark (nav, footer, page title) | `agency` |
-| Headline, description, hero buttons | `hero` |
-| Services | `services` |
-| Projects (title, tags, image, link) | `projects` |
-| Process steps | `steps` |
-| Studio statement and principles | `studio` |
-| Email, WhatsApp number, form endpoint | `contact` |
+| Headline, description, audience line, hero buttons | `hero` |
+| Service pillars and their capabilities (mark unconfirmed ones with `confirm: true`) | `pillars` |
+| Engagement shapes in the combination matrix | `shapes` |
+| Work: the built piece and the concepts | `projects` |
+| Process steps and working agreements | `steps`, `agreements` |
+| Studio point of view | `studio` |
+| Email, WhatsApp number, form endpoint, "what happens next" | `contact` |
 | Social profiles (only entries with a real `href` render) | `socials` |
+
+The team review pack, with research, open decisions and what is confirmed versus assumed, is in
+[`REVIEW.md`](REVIEW.md).
 
 `draft: true` shows small "Draft" markers beside content that is not yet confirmed. Set it to `false` when the
 copy is final.
 
 Real project images: put the file in `public/`, then add
-`image: { src: "/work/name.webp", alt: "…", width: 1600, height: 1000 }` to the project. Without `image`, a neutral
-placeholder drawing is shown. A project with `href` becomes a link; without it, no link is rendered.
+`image: { src: "/work/name.webp", alt: "…", width: 1600, height: 1000 }` to a project. Without `image`, the coded
+visual for that project is shown. A project with `href` becomes a link; without it, no link is rendered. Set
+`kind` to `"built"` only for real work, and keep `"concept"` for anything that is not a delivered project.
 
 Colours, type scale and surfaces are tokens in [`src/app/globals.css`](src/app/globals.css).
 
@@ -66,7 +71,8 @@ succeeded.
 | `public/models/instrument.glb` | Real-time model (meshopt-compressed, ~240 KB) |
 | `public/images/instrument-poster.webp` | Blender (Cycles) render used before the 3D loads and as the fallback |
 | `src/lib/instrument-scene.ts` | three.js scene: loads the GLB, studio lighting, animation |
-| `src/components/hero/HeroFigure.tsx` | Poster, canvas, annotations and loading logic |
+| `src/components/hero/HeroFigure.tsx` | Poster, canvas, part markers and loading logic |
+| `src/components/hero/PillarRail.tsx` | Pillar index under the hero; hover or focus highlights the matching sculpture part |
 
 Rebuild the assets (Blender 4.2+; developed with 5.2):
 
@@ -109,7 +115,7 @@ src/
   components/
     layout/            Nav (mobile menu is a native <dialog>), Footer
     sections/          Hero, Capabilities, Work, Process, Studio, Contact
-    work/              project tile and placeholder artwork
+    work/              project cards and the coded concept visuals
     contact/           ContactForm (client)
     hero/              HeroFigure (client)
     ui/                buttons, icons, draft marker

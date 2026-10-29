@@ -182,7 +182,7 @@ export const siteConfig = {
       ],
       connects: "Wraps everything else: threat modelling shapes the architecture, and tests and monitoring protect each release.",
     },
-  ] satisfies Pillar[],
+  ] as Pillar[],
 
   shapes: {
     title: "How the pillars combine",

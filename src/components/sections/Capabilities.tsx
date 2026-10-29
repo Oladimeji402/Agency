@@ -42,7 +42,7 @@ export function Capabilities() {
                   <span aria-hidden="true" className="h-px w-8 bg-line" />
                   <span>{pillar.part} of the sculpture</span>
                 </p>
-                <h3 className="t-h3 mt-5 max-w-md">{pillar.name}</h3>
+                <h3 className="mt-5 max-w-md text-[clamp(1.7rem,2.8vw,2.5rem)] leading-[1.02] font-medium tracking-[-0.035em]">{pillar.name}</h3>
                 <p className="mt-5 max-w-sm text-[1.15rem] leading-snug tracking-[-0.01em]">{pillar.problem}</p>
               </header>
 
